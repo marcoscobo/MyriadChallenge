@@ -1,6 +1,8 @@
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import roc_auc_score, roc_curve, make_scorer
 import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings("ignore")
 
 class modeling:
 
