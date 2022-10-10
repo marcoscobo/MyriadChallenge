@@ -1,8 +1,10 @@
 from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.metrics import roc_auc_score, roc_curve, make_scorer
 import matplotlib.pyplot as plt
+import warnings
+warnings.filterwarnings("ignore")
 
-class modeling:
+class sklearn_modeling:
 
     def __init__(self, model, X_train, y_train, X_test):
 
@@ -34,6 +36,7 @@ class modeling:
         if cv_train:
 
             self.X_train_t, self.X_test_t, self.y_train_t, self.y_test_t = train_test_split(self.X_train, self.y_train, test_size=0.3, random_state=0)
+
             self.cv_scores = cross_val_score(self.model, self.X_train_t, self.y_train_t, cv=self.cv_folds, scoring=self.auc_score)
             if verbose:
                 print("Mean AUC training sub-training set cross-validation score: %.2f" % self.cv_scores.mean())
@@ -41,6 +44,7 @@ class modeling:
 
             self.fitted_model = self.model.fit(self.X_train_t, self.y_train_t)
             self.y_pred_t = self.fitted_model.predict(self.X_test_t)
+
             self.cv_score = self.auc_custom_score(self.y_test_t, self.y_pred_t)
             if verbose:
                 print("AUC training sub-testing set score: %.2f" % self.cv_score)
@@ -60,6 +64,7 @@ class modeling:
         else:
 
             self.cv_scores = cross_val_score(self.model, self.X_train, self.y_train, cv=self.cv_folds, scoring=self.auc_score)
+
             if verbose:
                 print("Mean AUC training set cross-validation score: %.2f" % self.cv_scores.mean())
                 print(self.cv_scores)
